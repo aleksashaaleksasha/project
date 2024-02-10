@@ -1,39 +1,31 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
-from PyQt5.QtCore import pyqtSlot
 
-class App(QWidget):
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar
+from PyQt5.QtCore import Qt, QTimer
 
-    def __init__(self):
-        super().__init__()
-        self.title = 'title'
-        self.left = 10
-        self.top = 10
-        self.width = 640
-        self.height = 480
-        self.initUI()
+def update_progress():
+    value = progress.value()
+    if value > 0:
+        value -= 1
+        progress.setValue(value)
 
+app = QApplication([])
+window = QMainWindow()
+window.setWindowTitle("Using QProgressBar")
+window.setGeometry(100, 100, 300, 200)
+progress = QProgressBar(window)
+progress.setGeometry(30, 50, 240, 25)
+progress.setMinimum(0)
+progress.setMaximum(15)
 
-    def initUI(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-
-        self.labl = QLabel(self)
-        self.labl.setText('abc')
-
-        button = QPushButton('button', self)        
-        button.move(170,300)
-        button.clicked.connect(self.on_click)
-
-        self.show()
-
-    @pyqtSlot()
-    def on_click(self):
-        self.labl.setText('some text')
-        self.labl.adjustSize()
+progress.setFormat('%v')
+progress.reset()
+progress.setValue(15)
+btn = QtWidgets.QPushButton(window)
+btn.setGeometry(30, 100, 200, 25)
+btn.clicked.connect(update_progress)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+window.show()
+app.exec()

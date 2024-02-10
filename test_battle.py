@@ -17,42 +17,57 @@ class GameMainWindow(QMainWindow):
 
         self.menu_background = QtWidgets.QLabel(self.centralwidget)
         self.menu_background.setGeometry(QtCore.QRect(0, 0, 1920, 1080))
-        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/birch_summer.png"))
+        #self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/birch_summer.png"))
 
-        self.play_button = QtWidgets.QPushButton(self.centralwidget)
-        self.play_button.setGeometry(QtCore.QRect(750, 550, 400, 100))
-        self.play_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/menu/play_button.png);}
-                                        QPushButton:hover {border-image: url(assets/menu/play_button_pointed.png);}
-                                        QPushButton:pressed {border-image: url(assets/menu/play_button_clicked.png);}''')
+        self.card1 = QtWidgets.QPushButton(self.centralwidget)
+        self.card1.setGeometry(QtCore.QRect(400, 750, 180, 260))
+        self.card1.setText("card1")
 
-        self.aboutgame_button = QtWidgets.QPushButton(self.centralwidget)
-        self.aboutgame_button.setGeometry(QtCore.QRect(750, 670, 400, 100))
-        self.aboutgame_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/menu/aboutgame_button.png);}
-                                                QPushButton:hover {border-image: url(assets/menu/aboutgame_button_pointed.png);}
-                                                QPushButton:pressed {border-image: url(assets/menu/aboutgame_button_clicked.png);}''')
+        self.card2 = QtWidgets.QPushButton(self.centralwidget)
+        self.card2.setGeometry(QtCore.QRect(600, 750, 180, 260))
+        self.card2.setText("card2")
 
-        self.exit_button = QtWidgets.QPushButton(self.centralwidget)
-        self.exit_button.setGeometry(QtCore.QRect(770, 780, 350, 100))
-        self.exit_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/menu/exit_button.png);}
-                                                QPushButton:hover {border-image: url(assets/menu/exit_button_pointed.png);}
-                                                QPushButton:pressed {border-image: url(assets/menu/exit_button_clicked.png);}''')
-        self.exit_button.clicked.connect(self.exit_game)
+        self.card3 = QtWidgets.QPushButton(self.centralwidget)
+        self.card3.setGeometry(QtCore.QRect(800, 750, 180, 260))
+        self.card3.setText("card3")
+
+        self.card4 = QtWidgets.QPushButton(self.centralwidget)
+        self.card4.setGeometry(QtCore.QRect(1000, 750, 180, 260))
+        self.card4.setText("card4")
+
+        self.card5 = QtWidgets.QPushButton(self.centralwidget)
+        self.card5.setGeometry(QtCore.QRect(1200, 750, 180, 260))
+        self.card5.setText("card5")
+
+        self.end_turn_button = QtWidgets.QPushButton(self.centralwidget)
+        self.end_turn_button.setGeometry(QtCore.QRect(1700, 700, 140, 40))
+        self.end_turn_button.setText("end_turn_button")
+
+        self.points = QtWidgets.QLabel(self.centralwidget)
+        self.points.setGeometry(QtCore.QRect(170, 700, 60, 60))
+        self.points.setText("0")
+
+        self.hero = QtWidgets.QLabel(self.centralwidget)
+        self.hero.setGeometry(QtCore.QRect(250, 310, 140, 240))
+        self.hero.setText("hero")
+        self.hero_hp = QtWidgets.QLabel(self.centralwidget)
+        self.hero_hp.setGeometry(QtCore.QRect(250, 570, 140, 20))
+        self.hero_hp.setText("hero_hp")
+
+        self.enemy = QtWidgets.QLabel(self.centralwidget)
+        self.enemy.setGeometry(QtCore.QRect(1450, 310, 141, 241))
+        self.enemy.setText("enemy")
+        self.enemy_hp = QtWidgets.QLabel(self.centralwidget)
+        self.enemy_hp.setGeometry(QtCore.QRect(1440, 570, 55, 16))
+        self.enemy_hp.setText("enemy_hp")
 
         self.setCentralWidget(self.centralwidget)
 
-    def exit_game(self):
-        exit_menu = QtWidgets.QLabel(self.centralwidget)
-        exit_menu.setGeometry(QtCore.QRect(650, 500, 600, 200))
-        exit_menu.setPixmap(QtGui.QPixmap("assets/menu/exit_menu.png"))
 
 
-def start_application():
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GameMainWindow()
 
     window.show()
     sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    start_application()
