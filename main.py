@@ -22,8 +22,8 @@ class GameMainWindow(QMainWindow):
         self.play_button = QtWidgets.QPushButton(self.centralwidget)
         self.play_button.setGeometry(QtCore.QRect(750, 550, 400, 100))
         self.play_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/menu/play_button.png);}
-                                        QPushButton:hover {border-image: url(assets/menu/play_button_pointed.png);}
-                                        QPushButton:pressed {border-image: url(assets/menu/play_button_clicked.png);}''')
+                                            QPushButton:hover {border-image: url(assets/menu/play_button_pointed.png);}
+                                            QPushButton:pressed {border-image: url(assets/menu/play_button_clicked.png);}''')
 
         self.aboutgame_button = QtWidgets.QPushButton(self.centralwidget)
         self.aboutgame_button.setGeometry(QtCore.QRect(750, 670, 400, 100))
@@ -34,8 +34,8 @@ class GameMainWindow(QMainWindow):
         self.exit_button = QtWidgets.QPushButton(self.centralwidget)
         self.exit_button.setGeometry(QtCore.QRect(770, 780, 350, 100))
         self.exit_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/menu/exit_button.png);}
-                                                QPushButton:hover {border-image: url(assets/menu/exit_button_pointed.png);}
-                                                QPushButton:pressed {border-image: url(assets/menu/exit_button_clicked.png);}''')
+                                            QPushButton:hover {border-image: url(assets/menu/exit_button_pointed.png);}
+                                            QPushButton:pressed {border-image: url(assets/menu/exit_button_clicked.png);}''')
         self.exit_button.clicked.connect(self.exit_menu_open)
 
         self.setCentralWidget(self.centralwidget)
