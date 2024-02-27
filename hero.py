@@ -14,5 +14,5 @@ class ChosenHero:
 
 fighter = ChosenHero(15, 2, 3, 10, ['atk', 'atk', 'atk', 'atk', 'atk', 'dfnc', 'dfnc', 'dfnc', 'dfnc', 'dfnc'])
 rogue = ChosenHero(12, 3, 2, 12, ['atk', 'atk', 'atk', 'atk', 'atk', 'dfnc', 'dfnc', 'dfnc', 'dfnc', 'dfnc'])
-mage = ChosenHero(9, 4, 3, 10, ['atk', 'atk', 'atk', 'atk', 'atk', 'dfnc', 'dfnc', 'dfnc', 'dfnc', 'dfnc'])
-player = rogue
+wizard = ChosenHero(9, 4, 3, 10, ['atk', 'atk', 'atk', 'atk', 'atk', 'dfnc', 'dfnc', 'dfnc', 'dfnc', 'dfnc'])
+player = fighter

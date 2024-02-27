@@ -11,6 +11,7 @@ enemy2 = enemies.Warrior()
 enemy3 = enemies.Spearman()
 points = hero.player.max_action_points
 card_is_chosen = False
+card1_active, card2_active, card3_active, card4_active, card5_active = False, False, False, False, False
 
 
 class GameMainWindow(QMainWindow):
@@ -26,6 +27,7 @@ class GameMainWindow(QMainWindow):
 
         self.menu_background = QtWidgets.QLabel(self.centralwidget)
         self.menu_background.setGeometry(QtCore.QRect(0, 0, 1920, 1080))
+        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/battle_cave.png"))
 
         self.card1 = QtWidgets.QPushButton(self.centralwidget)
         self.card1.setGeometry(QtCore.QRect(400, 750, 200, 320))
@@ -61,8 +63,11 @@ class GameMainWindow(QMainWindow):
         self.points_label.setText(str(points))
 
         self.hero = QtWidgets.QLabel(self.centralwidget)
-        self.hero.setGeometry(QtCore.QRect(250, 310, 140, 240))
-        self.hero.setText("hero")
+        self.hero.setGeometry(QtCore.QRect(350, 400, 240, 320))
+        #self.hero.setPixmap(QtGui.QPixmap("assets/heroes/knight/idle.gif"))
+        self.hero_idle = QtGui.QMovie("assets/heroes/ninja/idle.gif")
+        self.hero.setMovie(self.hero_idle)
+        self.hero_idle.start()
         self.hero_hp = QtWidgets.QLabel(self.centralwidget)
         self.hero_hp.setGeometry(QtCore.QRect(250, 570, 140, 20))
         self.hero_hp.setText(str(hero.player.hp))
@@ -96,11 +101,11 @@ class GameMainWindow(QMainWindow):
 
         self.setCentralWidget(self.centralwidget)
 
-        hero.player.cards = [lambda: self.set_player_basic_attack(), lambda: self.set_player_basic_defence(),
-                             lambda: self.set_player_basic_attack(), lambda: self.set_player_basic_defence(),
-                             lambda: self.set_player_basic_attack(), lambda: self.set_player_basic_defence(),
-                             lambda: self.set_player_basic_attack(), lambda: self.set_player_basic_defence(),
-                             lambda: self.set_player_basic_attack(), lambda: self.set_player_basic_defence()]
+        hero.player.cards = [lambda: self.player_basic_attack(), lambda: self.player_basic_defence(),
+                             lambda: self.player_basic_attack(), lambda: self.player_basic_defence(),
+                             lambda: self.player_basic_attack(), lambda: self.player_basic_defence(),
+                             lambda: self.player_basic_attack(), lambda: self.player_basic_defence(),
+                             lambda: self.player_basic_attack(), lambda: self.player_basic_defence()]
         hero.player.active_cards = [''] * 5
         hero.player.played_cards = [''] * 5
 
@@ -122,6 +127,7 @@ class GameMainWindow(QMainWindow):
         self.hero_defence.setText(str(hero.player.def_points))
         points = hero.player.max_action_points
         self.points_label.setText(str(points))
+        self.set_cards()
 
     def check_and_reset(self, enemy_name, enemy_btn, enemy_hp_label):
         if enemy_name.hp > 0:
@@ -139,13 +145,26 @@ class GameMainWindow(QMainWindow):
             self.hero_hp.setText(str(hero.player.hp))
         self.hero_defence.setText(str(hero.player.def_points))
 
+    def get_card(self, card_name):
+        card_name.clicked.connect(lambda: random.choice(hero.player.cards))
+
     def set_cards(self):
-        i = 0
-        while '' in hero.player.active_cards:
-            hero.player.active_cards[i] = random.choice(hero.player.cards)
-            hero.player.cards[hero.player.cards.index(hero.player.active_cards[i])] = ''
-            if not hero.player.active_cards[i] == '':
-                i += 1
+        global card1_active, card2_active, card3_active, card4_active, card5_active
+        if not card1_active:
+            self.get_card(self.card1)
+            #card1_active = True
+        if not card2_active:
+            self.get_card(self.card2)
+            #card2_active = True
+        if not card3_active:
+            self.get_card(self.card3)
+            #card3_active = True
+        if not card4_active:
+            self.get_card(self.card4)
+            #card4_active = True
+        if not card5_active:
+            self.get_card(self.card5)
+            #card5_active = True
 
     def set_player_basic_attack(self):
         pass

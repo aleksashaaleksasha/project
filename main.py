@@ -17,7 +17,7 @@ class GameMainWindow(QMainWindow):
 
         self.menu_background = QtWidgets.QLabel(self.centralwidget)
         self.menu_background.setGeometry(QtCore.QRect(0, 0, 1920, 1080))
-        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/birch_summer.png"))
+        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/menu_background.png"))
 
         self.play_button = QtWidgets.QPushButton(self.centralwidget)
         self.play_button.setGeometry(QtCore.QRect(750, 550, 400, 100))
@@ -42,7 +42,7 @@ class GameMainWindow(QMainWindow):
 
         self.exit_menu_label = QtWidgets.QLabel(self.centralwidget)
         self.exit_menu_label.setGeometry(QtCore.QRect(650, 500, 600, 200))
-        self.exit_menu_label.setPixmap(QtGui.QPixmap("assets/menu/exit_menu.png"))
+        self.exit_menu_label.setPixmap(QtGui.QPixmap("assets/menu/exit_confirm.png"))
         self.exit_menu_label.hide()
 
         self.exit_cancel = QtWidgets.QPushButton(self.centralwidget)
