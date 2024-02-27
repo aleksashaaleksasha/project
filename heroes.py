@@ -1,0 +1,10 @@
+self.play_button.setStyleSheet("QPushButton,\n"
+                                       #"QPushButton:default,\n"
+                                       #"QPushButton:hover,\n"
+                                       #"QPushButton:selected,\n"
+                                       #"QPushButton:disabled,\n"
+                                       "QPushButton:pressed {\n"
+                                       "    background-color: transparent;\n"
+                                       "    border-color: transparent;\n"
+                                       "    color: transparent;\n"
+                                       "}")

@@ -27,14 +27,14 @@ class GameMainWindow(QMainWindow):
 
         self.menu_background = QtWidgets.QLabel(self.centralwidget)
         self.menu_background.setGeometry(QtCore.QRect(0, 0, 1920, 1080))
-        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/battle_cave.png"))
+        self.menu_background.setPixmap(QtGui.QPixmap("assets/backgrounds/battle_cave1.png"))
 
         self.card1 = QtWidgets.QPushButton(self.centralwidget)
         self.card1.setGeometry(QtCore.QRect(400, 750, 200, 320))
         self.card1.setText("card1")
-        #self.card1.clicked.connect(lambda: self.player_basic_attack())
-        #self.card1.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/ui/3attack.png);}
-        #                                            QPushButton:hover {border-image: url(assets/ui/3attackhover.png);}''')
+        self.card1.clicked.connect(lambda: self.player_basic_attack())
+        #self.card1.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/ui/attack_3x3.png);}
+        #                                            QPushButton:hover {border-image: url(assets/ui/attack_3x2.png);}''')
 
         self.card2 = QtWidgets.QPushButton(self.centralwidget)
         self.card2.setGeometry(QtCore.QRect(610, 750, 200, 320))
