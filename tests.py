@@ -56,18 +56,26 @@ class BattleEnemy(enemies.Enemy):
         self.dead_movie = QtGui.QMovie(self.dead_gif)
         self.defend_movie = QtGui.QMovie(self.defend_gif)
         self.attack_movie = QtGui.QMovie(self.attack_gif)
-
+    
     def hide_enemy(self):
         self.enemy_btn.hide()
         self.enemy_hp.hide()
         self.enemy_label.hide()
         self.enemy_def.hide()
-
+        
     def show_enemy(self):
         self.enemy_btn.show()
         self.enemy_hp.show()
         self.enemy_label.show()
         self.enemy_def.show()
+
+
+class BlankCard:
+    def __init__(self, window, nbr):
+        super().__init__()
+        self.number = nbr
+        self.card = QtWidgets.QPushButton(window.battlewidget)
+        self.card.setGeometry(QtCore.QRect(380+210*nbr, 750, 200, 320))
 
 
 class GameMainWindow(QMainWindow):
@@ -118,20 +126,7 @@ class GameMainWindow(QMainWindow):
                                                                     QPushButton:pressed {border-image: url(assets/ui/settings_pressed.png);}''')
         self.exit_battle.clicked.connect(exit)
 
-        self.card1 = QtWidgets.QPushButton(self.battlewidget)
-        self.card1.setGeometry(QtCore.QRect(380, 750, 200, 320))
-
-        self.card2 = QtWidgets.QPushButton(self.battlewidget)
-        self.card2.setGeometry(QtCore.QRect(590, 750, 200, 320))
-
-        self.card3 = QtWidgets.QPushButton(self.battlewidget)
-        self.card3.setGeometry(QtCore.QRect(800, 750, 200, 320))
-
-        self.card4 = QtWidgets.QPushButton(self.battlewidget)
-        self.card4.setGeometry(QtCore.QRect(1010, 750, 200, 320))
-
-        self.card5 = QtWidgets.QPushButton(self.battlewidget)
-        self.card5.setGeometry(QtCore.QRect(1220, 750, 200, 320))
+        self.deck = [BlankCard(self, 0), BlankCard(self, 1), BlankCard(self, 2), BlankCard(self, 3), BlankCard(self, 4)]
 
         self.end_turn_button = QtWidgets.QPushButton(self.battlewidget)
         self.end_turn_button.setGeometry(QtCore.QRect(1675, 775, 200, 100))
@@ -172,7 +167,7 @@ class GameMainWindow(QMainWindow):
 
         self.animations = {
             'basic': {
-                'animation': self.hero_basic_attack,
+                'animation':  self.hero_basic_attack,
                 'ms': 600
             },
             'massive': {
@@ -223,6 +218,8 @@ class GameMainWindow(QMainWindow):
 
     def play_game(self):
         hero.player = hero.fighter
+        for i in range(5):
+            self.set_card(i)
         self.setCentralWidget(self.battlewidget)
 
     def end_turn(self):
@@ -254,12 +251,8 @@ class GameMainWindow(QMainWindow):
         self.hero_defence.setText(str(hero.player.def_points))
         for i in range(5):
             self.get_points()
+            self.set_card(i)
         self.update_points()
-        self.set_card(self.card1, 0)
-        self.set_card(self.card2, 1)
-        self.set_card(self.card3, 2)
-        self.set_card(self.card4, 3)
-        self.set_card(self.card5, 4)
         self.end_turn_button.setEnabled(True)
         chosen_cards[0] = 0
         self.end_turn_button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(assets/ui/end_turn.png);}
@@ -284,32 +277,32 @@ class GameMainWindow(QMainWindow):
         elif f == 'b':
             blue_points += 1
 
-    def set_card(self, card_name, card_is_chosen):
+    def set_card(self, card_is_chosen):
         r = random.randint(1, 3)
         # if card_name.disconnect():
         try:
-            card_name.clicked.disconnect()
+            self.deck[card_is_chosen].card.clicked.disconnect()
         except:
             pass
         if r == 1:
-            card_name.clicked.connect(
-                lambda: self.player_basic_attack(card_name, card_is_chosen, self.animations['basic']))
-            card_name.setStyleSheet(hero.player.basic_attack_sheet)
+            self.deck[card_is_chosen].card.clicked.connect(
+                lambda: self.player_basic_attack(card_is_chosen, self.animations['basic']))
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.basic_attack_sheet)
         elif r == 2:
-            card_name.clicked.connect(lambda: self.player_basic_defence(card_name))
-            card_name.setStyleSheet(hero.player.defence_sheet)
+            self.deck[card_is_chosen].card.clicked.connect(lambda: self.player_basic_defence(card_is_chosen))
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.defence_sheet)
         else:
             r = random.randint(1, 3)
             if r == 1:
-                card_name.clicked.connect(lambda: self.player_heal(card_name))
-                card_name.setStyleSheet(hero.player.special1_sheet)
+                self.deck[card_is_chosen].card.clicked.connect(lambda: self.player_heal(card_is_chosen))
+                self.deck[card_is_chosen].card.setStyleSheet(hero.player.special1_sheet)
             elif r == 2:
-                card_name.clicked.connect(lambda: self.player_massive_attack(card_name))
-                card_name.setStyleSheet(hero.player.special2_sheet)
+                self.deck[card_is_chosen].card.clicked.connect(lambda: self.player_massive_attack(card_is_chosen))
+                self.deck[card_is_chosen].card.setStyleSheet(hero.player.special2_sheet)
             elif r == 3:
-                card_name.clicked.connect(
-                    lambda: self.player_basic_attack(card_name, card_is_chosen, self.animations['pierce']))
-                card_name.setStyleSheet(hero.player.special3_sheet)
+                self.deck[card_is_chosen].card.clicked.connect(
+                    lambda: self.player_basic_attack(card_is_chosen, self.animations['pierce']))
+                self.deck[card_is_chosen].card.setStyleSheet(hero.player.special3_sheet)
 
     def check(self, enemy_name):
         enemy_name.enemy_btn.setStyleSheet('QPushButton {border: none;margin: 0px;padding: 0px;}')
@@ -383,7 +376,7 @@ class GameMainWindow(QMainWindow):
     def run_n_play_animation(self, type, enemy_name):
         self.running_hero(enemy_name.number)
         QtCore.QTimer.singleShot(500, lambda: self.play_animation(type))
-        QtCore.QTimer.singleShot(500 + type['ms'], lambda: self.running_back_hero(enemy_name.number))
+        QtCore.QTimer.singleShot(500+type['ms'], lambda: self.running_back_hero(enemy_name.number))
         print(enemy_name.number)
 
     def enemy_animation(self, enemy_name, animation):
@@ -402,15 +395,12 @@ class GameMainWindow(QMainWindow):
             QtCore.QTimer.singleShot(500, lambda: enemy_name.enemy_label.setMovie(enemy_name.attack_movie))
             QtCore.QTimer.singleShot(500, lambda: enemy_name.attack_movie.start())
             QtCore.QTimer.singleShot(500 + enemy_name.attack_ms, lambda: enemy_name.attack_movie.stop())
-            QtCore.QTimer.singleShot(500 + enemy_name.attack_ms,
-                                     lambda: enemy_name.enemy_label.setMovie(enemy_name.run_back_movie))
+            QtCore.QTimer.singleShot(500 + enemy_name.attack_ms, lambda: enemy_name.enemy_label.setMovie(enemy_name.run_back_movie))
             QtCore.QTimer.singleShot(500 + enemy_name.attack_ms, lambda: enemy_name.run_back_movie.start())
             QtCore.QTimer.singleShot(500 + enemy_name.attack_ms, lambda: enemy_name.run_back_animation.start())
             QtCore.QTimer.singleShot(1000 + enemy_name.attack_ms, lambda: enemy_name.run_back_movie.stop())
-            QtCore.QTimer.singleShot(1000 + enemy_name.attack_ms,
-                                     lambda: enemy_name.enemy_label.resize(enemy_name.x_size, enemy_name.y_size))
-            QtCore.QTimer.singleShot(1000 + enemy_name.attack_ms,
-                                     lambda: enemy_name.enemy_label.setMovie(enemy_name.enemy_idle))
+            QtCore.QTimer.singleShot(1000 + enemy_name.attack_ms, lambda: enemy_name.enemy_label.resize(enemy_name.x_size, enemy_name.y_size))
+            QtCore.QTimer.singleShot(1000 + enemy_name.attack_ms, lambda: enemy_name.enemy_label.setMovie(enemy_name.enemy_idle))
             if hero.player.def_points >= enemy_name.attack:
                 hero.player.def_points -= enemy_name.attack
             else:
@@ -428,7 +418,7 @@ class GameMainWindow(QMainWindow):
             QtCore.QTimer.singleShot(500, lambda: enemy_name.defend_movie.stop())
             QtCore.QTimer.singleShot(500, lambda: enemy_name.enemy_label.setMovie(enemy_name.enemy_idle))
 
-    def player_basic_defence(self, card_name):
+    def player_basic_defence(self, card_is_chosen):
         global blue_points
         if blue_points > 0 and sum(chosen_cards) == 0:
             self.play_animation(self.animations['defend'])
@@ -437,32 +427,31 @@ class GameMainWindow(QMainWindow):
             hero.player.def_points += 3
             self.hero_defence.setText(str(hero.player.def_points))
             self.update_points()
-            card_name.clicked.disconnect()
-            card_name.setStyleSheet(hero.player.blank_sheet)
+            self.deck[card_is_chosen].card.clicked.disconnect()
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.blank_sheet)
 
-    def player_basic_attack(self, card_name, card_is_chosen, type):
+    def player_basic_attack(self, card_is_chosen, type):
         global chosen_cards, red_points, green_points
-        if ((type['animation'] == self.hero_basic_attack) and (red_points > 0) and (green_points > 0)) or (
-                (type['animation'] == self.hero_pierce_attack) and (red_points > 0) and (blue_points > 0)):
+        if ((type['animation'] == self.hero_basic_attack) and (red_points > 0) and (green_points > 0)) or ((type['animation'] == self.hero_pierce_attack) and (red_points > 0) and (blue_points > 0)):
             if sum(chosen_cards) == 0:
                 chosen_cards[card_is_chosen] = True
                 if type['animation'] == self.hero_basic_attack:
-                    card_name.setStyleSheet(hero.player.basic_attack_sheet_active)
+                    self.deck[card_is_chosen].card.setStyleSheet(hero.player.basic_attack_sheet_active)
                 elif type['animation'] == self.hero_pierce_attack:
-                    card_name.setStyleSheet(hero.player.special3_sheet_active)
+                    self.deck[card_is_chosen].card.setStyleSheet(hero.player.special3_sheet_active)
                 if self.enemy[0].hp > 0:
                     self.enemy[0].enemy_btn.clicked.connect(
-                        lambda: self.enemy_attacked(self.enemy[0], card_name, card_is_chosen, type))
+                        lambda: self.enemy_attacked(self.enemy[0], card_is_chosen, type))
                     self.enemy[0].enemy_btn.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
                                                                 QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
                 if self.enemy[1].hp > 0:
                     self.enemy[1].enemy_btn.clicked.connect(
-                        lambda: self.enemy_attacked(self.enemy[1], card_name, card_is_chosen, type))
+                        lambda: self.enemy_attacked(self.enemy[1], card_is_chosen, type))
                     self.enemy[1].enemy_btn.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
                                                                 QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
                 if self.enemy[2].hp > 0:
                     self.enemy[2].enemy_btn.clicked.connect(
-                        lambda: self.enemy_attacked(self.enemy[2], card_name, card_is_chosen, type))
+                        lambda: self.enemy_attacked(self.enemy[2], card_is_chosen, type))
                     self.enemy[2].enemy_btn.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
                                                                 QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
             else:
@@ -472,45 +461,45 @@ class GameMainWindow(QMainWindow):
                     self.check(self.enemy[2])
                 chosen_cards[card_is_chosen] = False
                 if type['animation'] == self.hero_basic_attack:
-                    card_name.setStyleSheet(hero.player.basic_attack_sheet)
+                    self.deck[card_is_chosen].card.setStyleSheet(hero.player.basic_attack_sheet)
                 elif type['animation'] == self.hero_pierce_attack:
-                    card_name.setStyleSheet(hero.player.special3_sheet)
+                    self.deck[card_is_chosen].card.setStyleSheet(hero.player.special3_sheet)
             print('Индекс - ', card_is_chosen)
             print('Выбор карты атаки - ', chosen_cards)
 
-    def player_heal(self, card_name):
+    def player_heal(self, card_is_chosen):
         global green_points
         if green_points > 1 and sum(chosen_cards) == 0:
             green_points -= 2
             hero.player.hp = min(hero.player.hp + 5, 15)
             self.hero_hp.setText(str(hero.player.hp))
             self.update_points()
-            card_name.clicked.disconnect()
-            card_name.setStyleSheet(hero.player.blank_sheet)
+            self.deck[card_is_chosen].card.clicked.disconnect()
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.blank_sheet)
 
-    def player_massive_attack(self, card_name):
+    def player_massive_attack(self, card_is_chosen):
         global red_points
         if red_points == 3 and sum(chosen_cards) == 0:
             self.run_n_play_animation(self.animations['massive'], self.enemy[1])
             red_points -= 3
-            if self.enemy[0].def_points >= hero.player.attack - 1:
-                self.enemy[0].def_points -= hero.player.attack - 1
+            if self.enemy[0].def_points >= hero.player.attack-1:
+                self.enemy[0].def_points -= hero.player.attack-1
             else:
-                self.enemy[0].hp = self.enemy[0].hp - (hero.player.attack - 1 - self.enemy[0].def_points)
+                self.enemy[0].hp = self.enemy[0].hp - (hero.player.attack-1 - self.enemy[0].def_points)
                 self.enemy[0].def_points = 0
                 QtCore.QTimer.singleShot(1100, lambda: self.enemy[0].enemy_hp.setText(str(self.enemy[0].hp)))
             QtCore.QTimer.singleShot(1100, lambda: self.enemy[0].enemy_def.setText(str(self.enemy[0].def_points)))
-            if self.enemy[1].def_points >= hero.player.attack - 1:
-                self.enemy[1].def_points -= hero.player.attack - 1
+            if self.enemy[1].def_points >= hero.player.attack-1:
+                self.enemy[1].def_points -= hero.player.attack-1
             else:
-                self.enemy[1].hp = self.enemy[1].hp - (hero.player.attack - 1 - self.enemy[1].def_points)
+                self.enemy[1].hp = self.enemy[1].hp - (hero.player.attack-1 - self.enemy[1].def_points)
                 self.enemy[1].def_points = 0
                 QtCore.QTimer.singleShot(1100, lambda: self.enemy[1].enemy_hp.setText(str(self.enemy[1].hp)))
             QtCore.QTimer.singleShot(1100, lambda: self.enemy[1].enemy_def.setText(str(self.enemy[1].def_points)))
-            if self.enemy[2].def_points >= hero.player.attack - 1:
-                self.enemy[2].def_points -= hero.player.attack - 1
+            if self.enemy[2].def_points >= hero.player.attack-1:
+                self.enemy[2].def_points -= hero.player.attack-1
             else:
-                self.enemy[2].hp = self.enemy[2].hp - (hero.player.attack - 1 - self.enemy[2].def_points)
+                self.enemy[2].hp = self.enemy[2].hp - (hero.player.attack-1 - self.enemy[2].def_points)
                 self.enemy[2].def_points = 0
                 QtCore.QTimer.singleShot(1100, lambda: self.enemy[2].enemy_hp.setText(str(self.enemy[2].hp)))
             QtCore.QTimer.singleShot(1100, lambda: self.enemy[2].enemy_def.setText(str(self.enemy[2].def_points)))
@@ -521,13 +510,13 @@ class GameMainWindow(QMainWindow):
             QtCore.QTimer.singleShot(1300, lambda: self.check(self.enemy[1]))
             QtCore.QTimer.singleShot(1300, lambda: self.check(self.enemy[2]))
             self.update_points()
-            card_name.clicked.disconnect()
-            card_name.setStyleSheet(hero.player.blank_sheet)
+            self.deck[card_is_chosen].card.clicked.disconnect()
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.blank_sheet)
 
-    def card_is_active(self, chosen_card):
-        chosen_cards[chosen_card] = False
-
-    def enemy_attacked(self, enemy_name, card_name, card_is_chosen, type):
+    def card_is_active(self, card_is_chosen):
+        chosen_cards[card_is_chosen] = False
+        
+    def enemy_attacked(self, enemy_name, card_is_chosen, type):
         global red_points, green_points, blue_points, chosen_cards
         enemy_name.enemy_btn.setStyleSheet('QPushButton {border: none;margin: 0px;padding: 0px;}')
         if self.enemy[0].hp > 0:
@@ -547,19 +536,19 @@ class GameMainWindow(QMainWindow):
                 enemy_name.def_points = 0
                 QtCore.QTimer.singleShot(1100, lambda: enemy_name.enemy_hp.setText(str(enemy_name.hp)))
             QtCore.QTimer.singleShot(1100, lambda: enemy_name.enemy_def.setText(str(enemy_name.def_points)))
-            card_name.setStyleSheet(hero.player.basic_attack_sheet)
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.basic_attack_sheet)
         elif type['animation'] == self.hero_pierce_attack:
             blue_points -= 1
             enemy_name.hp = enemy_name.hp - (hero.player.attack - 1)
             QtCore.QTimer.singleShot(1100, lambda: enemy_name.enemy_hp.setText(str(enemy_name.hp)))
-            card_name.setStyleSheet(hero.player.special3_sheet)
+            self.deck[card_is_chosen].card.setStyleSheet(hero.player.special3_sheet)
         self.update_points()
         QtCore.QTimer.singleShot(2000, lambda: self.card_is_active(card_is_chosen))
         QtCore.QTimer.singleShot(1100, lambda: self.check(self.enemy[0]))
         QtCore.QTimer.singleShot(1100, lambda: self.check(self.enemy[1]))
         QtCore.QTimer.singleShot(1100, lambda: self.check(self.enemy[2]))
-        card_name.clicked.disconnect()
-        card_name.setStyleSheet(hero.player.blank_sheet)
+        self.deck[card_is_chosen].card.clicked.disconnect()
+        self.deck[card_is_chosen].card.setStyleSheet(hero.player.blank_sheet)
         print('Атаковали врага - ', chosen_cards)
 
 
@@ -570,11 +559,5 @@ if __name__ == "__main__":
 
     QtGui.QFontDatabase.addApplicationFont("assets/monogram.ttf")
     app.setStyleSheet("QLabel {font-family:monogram; font-size:128px; color: rgb(255,255,255);}")
-
-    window.set_card(window.card1, 0)
-    window.set_card(window.card2, 1)
-    window.set_card(window.card3, 2)
-    window.set_card(window.card4, 3)
-    window.set_card(window.card5, 4)
 
     sys.exit(app.exec())
