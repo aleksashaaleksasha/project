@@ -1,0 +1,11 @@
+{
+    "knight": {
+        "name": "\u0420\u044b\u0446\u0430\u0440\u044c", 
+        "hp": 15, 
+        "atk": 3, 
+        "dfnc": 3, 
+        "red_points": 3, 
+        "green_points": 3, 
+        "blue_points": 3
+        }
+    }
