@@ -1,0 +1,58 @@
+{
+    "red_slime": {
+        "name": "\u041a\u0440\u0430\u0441\u043d\u044b\u0439 \u0441\u043b\u0438\u0437\u0435\u043d\u044c", 
+        "hp": [3, 4], 
+        "attack": [2, 3], 
+        "defence": [2, 3], 
+        "tags": ["slime"]
+    }, 
+    "green_slime": {
+        "name": "\u0417\u0435\u043b\u0451\u043d\u044b\u0439 \u0441\u043b\u0438\u0437\u0435\u043d\u044c", 
+        "hp": [5, 6], 
+        "attack": [1, 2], 
+        "defence": [2, 3], 
+        "tags": ["slime"]
+    }, 
+    "blue_slime": {
+        "name": "\u0413\u043e\u043b\u0443\u0431\u043e\u0439 \u0441\u043b\u0438\u0437\u0435\u043d\u044c", 
+        "hp": [3, 4], 
+        "attack": [1, 2], 
+        "defence": [3, 4], 
+        "tags": ["slime"]
+    }, 
+    "spearman": {
+        "name": "\u0421\u043a\u0435\u043b\u0435\u0442-\u043a\u043e\u043f\u0435\u0439\u0449\u0438\u043a", 
+        "hp": [6, 8], 
+        "attack": [2, 3], 
+        "defence": [1, 2], 
+        "tags": ["skeleton"]
+    }, 
+    "warrior": {
+        "name": "\u0421\u043a\u0435\u043b\u0435\u0442-\u0432\u043e\u0438\u043d", 
+        "hp": [8, 10], 
+        "attack": [1, 2], 
+        "defence": [3, 4], 
+        "tags": ["skeleton"]
+    }, 
+    "fire_spirit": {
+        "name": "\u041e\u0433\u043d\u0435\u043d\u043d\u044b\u0439 \u0434\u0443\u0445", 
+        "hp": [5, 6], 
+        "attack": [2, 3], 
+        "defence": [2, 3], 
+        "tags": ["spirit"]
+    }, 
+    "fiend": {
+        "name": "\u0411\u0435\u0441\u0442\u0438\u044f", 
+        "hp": [20, 40], 
+        "attack": [4, 5], 
+        "defence": [4, 5], 
+        "tags": ["boss"]
+    }, 
+    "ghost": {
+        "name": "\u041f\u0440\u0438\u0437\u0440\u0430\u043a", 
+        "hp": [15, 20], 
+        "attack": [6, 8], 
+        "defence": [2, 3], 
+        "tags": ["boss", "spirit"]
+    }
+}
