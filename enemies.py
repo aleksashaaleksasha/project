@@ -36,5 +36,8 @@ class Enemy:
         self.defend_gif = f"{assets_path}{enemy_name}/protect.gif"
         self.run_gif = f"{assets_path}{enemy_name}/run.gif"
         self.run_back_gif = f"{assets_path}{enemy_name}/run_back.gif"
-        self.attack_ms = 600
-        self.attack_gif = f"{assets_path}{enemy_name}/basic_attack.gif"
+        self.attack_1_gif = f"{assets_path}{enemy_name}/attack_1.gif"
+        self.attack_2_gif = f"{assets_path}{enemy_name}/attack_2.gif"
+        self.attack_3_gif = f"{assets_path}{enemy_name}/attack_3.gif"
+
+        self.attack_gif_list = [self.attack_1_gif, self.attack_2_gif, self.attack_3_gif]

@@ -15,10 +15,14 @@ class ChosenHero:
         self.attack = hero["atk"]
         self.defence = hero["dfnc"]
         self.def_points = 0
+        self.chosen_cards = [False] * 6
 
         self.max_red_points = hero["red_points"]
         self.max_green_points = hero["green_points"]
         self.max_blue_points = hero["blue_points"]
+        self.red_points = hero["red_points"]
+        self.green_points = hero["green_points"]
+        self.blue_points = hero["blue_points"]
 
         self.idle_gif = f"{assets_path}{name}/idle.gif"
         self.hurt_gif = f"{assets_path}{name}/hurt.gif"
@@ -31,23 +35,34 @@ class ChosenHero:
         self.run_back_gif = f"{assets_path}{name}/run_back.gif"
         self.dead_gif = f"{assets_path}{name}/dead.gif"
 
-        self.blank_sheet = str('QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/blank_card.png);}
-                                                                QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/blank_card_hover.png);}''')
+        self.blank_sheet = 'QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/blank_card.png);}
+                                                                QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/blank_card_hover.png);}'''
+
         self.basic_attack_sheet = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/attack_card.png);}
                                                                 QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/attack_card_hover.png);}
                                                                 QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards/attack_card_pressed.png);}'''
         self.basic_attack_sheet_active = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/attack_card_hover.png);}
                                                                         QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/attack_card_hover.png);}
                                                                         QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards/attack_card_pressed.png);}'''
+
         self.defence_sheet = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/def_card.png);}
                                                                                     QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/def_card_hover.png);}
                                                                                     QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards/def_card_pressed.png);}'''
+
         self.special1_sheet = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/special1_card.png);}
                                                                                             QPushButton:hover {border-image: url('''+assets_path+name+'''/cards/special1_card_hover.png);}
                                                                                             QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards/special1_card_pressed.png);}'''
+        self.special1_sheet_active = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(''' + assets_path + name + '''/cards//special1_card_hover.png);}
+                                                                                                            QPushButton:hover {border-image: url(''' + assets_path + name + '''/cards//special1_card_hover.png);}
+                                                                                                            QPushButton:pressed {border-image: url(''' + assets_path + name + '''/cards//special1_card_pressed.png);}'''
+
         self.special2_sheet = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards/special2_card.png);}
                                                                                             QPushButton:hover {border-image: url('''+assets_path+name+'''/cards//special2_card_hover.png);}
                                                                                             QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards//special2_card_pressed.png);}'''
+        self.special2_sheet_active = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url(''' + assets_path + name + '''/cards//special2_card_hover.png);}
+                                                                                                            QPushButton:hover {border-image: url(''' + assets_path + name + '''/cards//special2_card_hover.png);}
+                                                                                                            QPushButton:pressed {border-image: url(''' + assets_path + name + '''/cards//special2_card_pressed.png);}'''
+
         self.special3_sheet = '''QPushButton {border: none;margin: 0px;padding: 0px;border-image: url('''+assets_path+name+'''/cards//special3_card.png);}
                                                                                             QPushButton:hover {border-image: url('''+assets_path+name+'''/cards//special3_card_hover.png);}
                                                                                             QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards//special3_card_pressed.png);}'''
@@ -56,6 +71,4 @@ class ChosenHero:
                                                                                                     QPushButton:pressed {border-image: url('''+assets_path+name+'''/cards//special3_card_pressed.png);}'''
 
 
-fighter = ChosenHero('knight')
-
-player = fighter
+player = ChosenHero('knight')
