@@ -772,18 +772,17 @@ class GameMainWindow(QMainWindow):
                 if self.enemy[0].enemy.hp > 0:
                     self.enemy[0].button.clicked.connect(
                         lambda: self.attack_enemy(self.enemy[0], card_is_chosen, animation))
-                    self.enemy[0].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
-                                                                QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
+                    self.enemy[0].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px; border-image: url(assets/enemies/point_enemy.png);}
+                                                                QPushButton:hover {border-image: url(assets/enemies/point_enemy_hover.png);}''')
                 if self.enemy[1].enemy.hp > 0:
                     self.enemy[1].button.clicked.connect(
                         lambda: self.attack_enemy(self.enemy[1], card_is_chosen, animation))
-                    self.enemy[1].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
-                                                                QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
-                if self.enemy[2].enemy.hp > 0:
+                    self.enemy[1].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px; border-image: url(assets/enemies/point_enemy.png);}
+                                                                QPushButton:hover {border-image: url(assets/enemies/point_enemy_hover.png);}''')
                     self.enemy[2].button.clicked.connect(
                         lambda: self.attack_enemy(self.enemy[2], card_is_chosen, animation))
-                    self.enemy[2].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px;}
-                                                                QPushButton:hover {border-image: url(assets/enemies/enemy_hover.png);}''')
+                    self.enemy[2].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px; border-image: url(assets/enemies/point_enemy.png);}
+                                                                QPushButton:hover {border-image: url(assets/enemies/point_enemy_hover.png);}''')
             else:
                 if hero.player.chosen_cards[card_is_chosen]:
                     self.clear_enemies_btn()
