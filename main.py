@@ -779,6 +779,7 @@ class GameMainWindow(QMainWindow):
                         lambda: self.attack_enemy(self.enemy[1], card_is_chosen, animation))
                     self.enemy[1].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px; border-image: url(assets/enemies/point_enemy.png);}
                                                                 QPushButton:hover {border-image: url(assets/enemies/point_enemy_hover.png);}''')
+                if self.enemy[2].enemy.hp > 0:
                     self.enemy[2].button.clicked.connect(
                         lambda: self.attack_enemy(self.enemy[2], card_is_chosen, animation))
                     self.enemy[2].button.setStyleSheet('''QPushButton {border: none;margin: 0px;padding: 0px; border-image: url(assets/enemies/point_enemy.png);}
